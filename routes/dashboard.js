@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 module.exports = (app) => {
   app.get("/dashboard", (req, res) => {
     // Retrieve JWT token from cookie
