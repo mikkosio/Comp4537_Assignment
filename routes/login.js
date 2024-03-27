@@ -17,10 +17,9 @@ module.exports = (app) => {
 
         if (username && password) {
             pool.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password], (error, results) => {
-                // pool.query('SELECT * FROM users', [], (error, results) => {
                 if (results.rows.length > 0) {
                     console.log(results.rows)
-                    res.redirect('/');
+                    res.redirect('/dashboard');
                 } else {
                     console.log(results.rows)
                     var msg = 'Incorrect username or password';
