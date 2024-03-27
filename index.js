@@ -9,6 +9,7 @@ const pool = require('./dbConn');
 // import routes
 const signup = require('./routes/signup');
 const login = require('./routes/login');
+const dashboard = require('./routes/dashboard');
 
 app.set('view engine', 'ejs');
 
