@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const pool = require('../dbConn');
+const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
     app.get('/login', (req, res) => {
@@ -18,10 +19,14 @@ module.exports = (app) => {
         if (username && password) {
             pool.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password], (error, results) => {
                 if (results.rows.length > 0) {
-                    console.log(results.rows)
+                    const token = jwt.sign({ username: username }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                    res.cookie('token', token, {
+                        httpOnly: true,
+                        secure: true,
+                        maxAge: 60 * 60 * 1000
+                    });
                     res.redirect('/dashboard');
                 } else {
-                    console.log(results.rows)
                     var msg = 'Incorrect username or password';
                     res.render('login', {
                         'msg': msg
