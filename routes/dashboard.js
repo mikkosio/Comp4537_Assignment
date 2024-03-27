@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 module.exports = (app) => {
   app.get("/dashboard", (req, res) => {
     // Retrieve JWT token from cookie
-    console.log(`req.cookies: ${JSON.stringify(req.cookies)}`);
     const token = req.cookies.jwt;
 
     // If token is not present, redirect to login

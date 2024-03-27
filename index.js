@@ -12,6 +12,7 @@ const pool = require('./dbConn');
 const signup = require('./routes/signup');
 const login = require('./routes/login');
 const dashboard = require('./routes/dashboard');
+const logout = require('./routes/logout');
 
 app.set('view engine', 'ejs');
 
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 signup(app);
 login(app);
 dashboard(app);
+logout(app);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
