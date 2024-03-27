@@ -1,0 +1,29 @@
+<%- include("templates/header") %>
+
+    <div class="container p-5">
+        <form action='/login' method='POST' class="col-5 mx-auto">
+            <h2> Log in </h2>
+            <div class="mb-3">
+                <label for="inputName" class="form-label"> Full Name </label>
+                <input type="text" class="form-control" name="name" id="inputName" required>
+            </div>
+            <div class="mb-3">
+                <label for="inputUsername" class="form-label"> Username </label>
+                <input type="text" class="form-control" name="username" id="inputUsername" required>
+            </div>
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label"> Password </label>
+                <input type="password" class="form-control" name="password" id="inputPassword" required>
+            </div>
+            <button type="submit" value="submit" class="btn btn-primary">Submit</button>
+            <p class="d-inline-block float-end">
+                Don't have an account? <a href="/signin"> Sign Up here. </a>
+            </p>
+            <p class="text-danger fw-medium">
+                <%= msg %>
+            </p>
+        </form>
+    </div>
+
+
+    <%- include("templates/footer") %>
