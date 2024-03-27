@@ -13,6 +13,7 @@ const signup = require('./routes/signup');
 const login = require('./routes/login');
 const dashboard = require('./routes/dashboard');
 const logout = require('./routes/logout');
+const admin = require('./routes/admin');
 
 app.set('view engine', 'ejs');
 
@@ -25,6 +26,7 @@ signup(app);
 login(app);
 dashboard(app);
 logout(app);
+admin(app);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
