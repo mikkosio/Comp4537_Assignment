@@ -13,13 +13,20 @@ module.exports = (app) => {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.post('/login', (req, res) => {
 
-        var username = req.body.username;
+        var email = req.body.email;
         var password = req.body.password;
 
-        if (username && password) {
-            pool.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password], (error, results) => {
+        if (email && password) {
+            pool.query('SELECT * FROM users WHERE email = $1 AND password = $2', [email, password], (error, results) => {
                 if (results.rows.length > 0) {
-                    const token = jwt.sign({ username: username }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                    const username = results.rows[0].username;
+                    let isAdmin = false;
+
+                    if (username === "admin") {
+                        isAdmin = true;
+                    }
+
+                    const token = jwt.sign({ username: username, admin: isAdmin }, process.env.SECRET_KEY, { expiresIn: '1h' });
                     res.cookie('jwt', token, {
                         httpOnly: true,
                         secure: true,
