@@ -4,12 +4,12 @@
         <form action='/signup' method='POST' class="col-5 mx-auto">
             <h2> Create an Account </h2>
             <div class="mb-3">
-                <label for="inputName" class="form-label"> Full Name </label>
-                <input type="text" class="form-control" name="name" id="inputName" required>
-            </div>
-            <div class="mb-3">
                 <label for="inputUsername" class="form-label"> Username </label>
                 <input type="text" class="form-control" name="username" id="inputUsername" required>
+            </div>
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label"> Email </label>
+                <input type="text" class="form-control" name="email" id="inputEmail" required>
             </div>
             <div class="mb-3">
                 <label for="inputPassword" class="form-label"> Password </label>
@@ -27,3 +27,17 @@
 
 
 <%- include("templates/footer") %>
+
+<!-- Generated with help of gpt 3.5 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputFields = document.querySelectorAll('input');
+        inputFields.forEach(function (input) {
+            input.addEventListener('keypress', function (event) {
+                if (event.key === ' ') {
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>
