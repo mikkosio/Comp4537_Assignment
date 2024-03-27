@@ -20,7 +20,7 @@ module.exports = (app) => {
             pool.query('SELECT * FROM users WHERE username = $1 AND password = $2', [username, password], (error, results) => {
                 if (results.rows.length > 0) {
                     const token = jwt.sign({ username: username }, process.env.SECRET_KEY, { expiresIn: '1h' });
-                    res.cookie('token', token, {
+                    res.cookie('jwt', token, {
                         httpOnly: true,
                         secure: true,
                         maxAge: 60 * 60 * 1000

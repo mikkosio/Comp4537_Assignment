@@ -1,7 +1,9 @@
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // database connection
 const pool = require('./dbConn');
