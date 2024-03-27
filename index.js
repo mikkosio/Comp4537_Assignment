@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 // routes
 signup(app);
 login(app);
+dashboard(app);
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
