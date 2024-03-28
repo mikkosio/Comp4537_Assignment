@@ -37,7 +37,11 @@ module.exports = (app) => {
                         secure: true,
                         maxAge: 60 * 60 * 1000
                     });
-                    res.redirect('/dashboard');
+                    if (isAdmin) {
+                        res.redirect('/admin');
+                    } else {
+                      res.redirect('/dashboard');
+                    }
                 } else {
                     var msg = 'Incorrect username or password';
                     res.render('login', {

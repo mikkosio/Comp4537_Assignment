@@ -7,7 +7,7 @@ module.exports = (app) => {
 
         // If token is not present, redirect to login
         if (!token) {
-            console.error("No token found");
+            console.error("No token found for admin access");
             return res.redirect("/login");
         }
         try {

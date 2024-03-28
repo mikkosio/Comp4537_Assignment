@@ -1,11 +1,12 @@
 <%- include("templates/header") %>
     <div class="container p-5">
         <h2> Welcome admin </h2>
-        <p> You are logged in
+        <p> You are logged in as 
             <strong>
                 <%= username %>
             </strong>
         </p>
+        <a href="/logout" class="btn btn-danger"> Logout </a>
     </div>
     
 <%- include("templates/footer") %>
