@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const pool = require('../dbConn');
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 module.exports = (app) => {
     app.get('/signup', (req, res) => {
@@ -26,7 +28,17 @@ module.exports = (app) => {
             if (result.rows.length > 0) {
                 return res.redirect('/signup?msg=User already exists');
             } else {
-                await client.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, password]);
+                // hash password
+                bcrypt.hash(password, saltRounds, async (err, hash) => {
+                    if (err) {
+                        console.error(`Error hashing password: ${err}`);
+                    }
+                    try {
+                      await client.query('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, hash]);
+                    } catch (err) {
+                        console.error(`Error inserting user: ${err}`);
+                    }
+                });
             }
         } catch (err) {
             console.error(err);
