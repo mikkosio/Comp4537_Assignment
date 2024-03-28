@@ -16,13 +16,18 @@ module.exports = (app) => {
         var email = req.body.email;
         var password = req.body.password;
 
+        pool.query('SELECT * FROM users', [], (error, results) => {
+            console.log(results.rows)
+        });
+
         if (email && password) {
             pool.query('SELECT * FROM users WHERE email = $1 AND password = $2', [email, password], (error, results) => {
                 if (results.rows.length > 0) {
                     const username = results.rows[0].username;
+                    const admin = results.rows[0].admin;
                     let isAdmin = false;
 
-                    if (username === "admin") {
+                    if (admin) {
                         isAdmin = true;
                     }
 
