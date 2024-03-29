@@ -36,7 +36,8 @@ module.exports = (app) => {
                         console.error(`Error hashing password: ${err}`);
                     }
                     try {
-                      await client.query('INSERT INTO users (username, email, password, role_id) VALUES ($1, $2, $3, $4)', [username, email, hash, 1]);
+                        let query = 'INSERT INTO users (username, email, password, role_id) VALUES ($1, $2, $3, $4)';
+                        await client.query(query, [username, email, hash, 1]);
                     } catch (err) {
                         console.error(`Error inserting user: ${err}`);
                     }
