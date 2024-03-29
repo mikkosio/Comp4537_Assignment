@@ -15,6 +15,7 @@ const login = require('./routes/login');
 const dashboard = require('./routes/dashboard');
 const logout = require('./routes/logout');
 const admin = require('./routes/admin');
+const chatroom = require('./routes/chatroom');
 
 app.set('view engine', 'ejs');
 
@@ -28,6 +29,7 @@ login(app);
 dashboard(app);
 logout(app);
 admin(app);
+chatroom(app);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
