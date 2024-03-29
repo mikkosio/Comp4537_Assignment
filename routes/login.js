@@ -18,12 +18,10 @@ module.exports = (app) => {
         var email = req.body.email;
         var password = req.body.password;
 
-        pool.query('SELECT * FROM users', [], (error, results) => {
-            console.log(results.rows)
-        });
-
         if (email && password) {
-            pool.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
+            // sql injection protection
+            let query = `SELECT * FROM users WHERE email = $1`;
+            pool.query(query, [email], (error, results) => {
                 if (results.rows.length > 0) {
                     const username = results.rows[0].username;
                     const hashed_password = results.rows[0].password;
