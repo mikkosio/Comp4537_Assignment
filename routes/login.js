@@ -31,24 +31,29 @@ module.exports = (app) => {
                             console.error(`Error comparing password: ${err}`);
                         }
                         if (result) {
-                            const admin = results.rows[0].admin;
-                            let isAdmin = false;
+                            let query = `SELECT * FROM user_roles WHERE role_id = $1`;
+                            pool.query(query, [results.rows[0].role_id], (error, results) => {
+                                console.log(results.rows);
 
-                            if (admin) {
-                                isAdmin = true;
-                            }
+                                const role = results.rows[0].role_name;
+                                let isAdmin = false;
 
-                            const token = jwt.sign({ username: username, admin: isAdmin }, process.env.SECRET_KEY, { expiresIn: '1h' });
-                            res.cookie('jwt', token, {
-                                httpOnly: true,
-                                secure: true,
-                                maxAge: 60 * 60 * 1000
+                                if (role === 'admin') {
+                                    isAdmin = true;
+                                }
+
+                                const token = jwt.sign({ username: username, admin: isAdmin }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                                res.cookie('jwt', token, {
+                                    httpOnly: true,
+                                    secure: true,
+                                    maxAge: 60 * 60 * 1000
+                                });
+                                if (isAdmin) {
+                                    res.redirect('/admin');
+                                } else {
+                                    res.redirect('/dashboard');
+                                }
                             });
-                            if (isAdmin) {
-                                res.redirect('/admin');
-                            } else {
-                                res.redirect('/dashboard');
-                            }
                         } else {
                             var msg = 'Incorrect password';
                             res.render('login', {
