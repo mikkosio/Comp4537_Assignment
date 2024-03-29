@@ -24,7 +24,9 @@ module.exports = (app) => {
         // check if user already exists
         const client = await pool.connect();
         try {
-            const result = await client.query('SELECT * FROM users WHERE username = $1', [username]);
+            // sql injection protection
+            let query = 'SELECT * FROM users WHERE username = $1';
+            const result = await client.query(query, [username]);
             if (result.rows.length > 0) {
                 return res.redirect('/signup?msg=User already exists');
             } else {
