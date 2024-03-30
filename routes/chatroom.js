@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+const pool = require('../dbConn');
 
 module.exports = (app) => {
     app.get("/chatroom", (req, res) => {
@@ -22,5 +24,18 @@ module.exports = (app) => {
             console.error(err);
             return res.redirect("/login");
         }
+    });
+
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.post('/text-input', (req, res) => {
+        const token = req.cookies.jwt;
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        const username = decodedToken.username;
+        let query = 'SELECT * FROM users WHERE username = $1';
+        pool.query(query, [username], (error, results) => {
+            if (results.rows.length > 0) {
+                console.log(results.rows);
+            }
+        });
     });
 };

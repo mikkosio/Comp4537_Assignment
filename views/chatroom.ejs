@@ -3,6 +3,46 @@
     <div class="container p-5">
         <h2> Welcome to the Chat Room </h2>
         <p> Please enter a message below! </p>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            .chat-container {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                box-sizing: border-box;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+                height: 400px;
+                overflow-y: auto;
+            }
+
+            #input-field {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                border-radius: 5px;
+            }
+
+            .message {
+                margin-bottom: 10px;
+            }
+
+            .user-message {
+                text-align: right;
+                color: #007bff;
+            }
+
+            .bot-message {
+                text-align: left;
+                color: #28a745;
+            }
+        </style>
         <script>
             // Function to send message to the server and receive bot's response
             async function sendMessage() {
@@ -53,54 +93,14 @@
                     messageElement.classList.add('bot-message');
                 }
                 chatMessages.appendChild(messageElement);
+            }
 
-            }
-            function handleKeyPress(event) {
-                if (event.keyCode === 13) { // Check if Enter key is pressed
-                    sendMessage(); // Call sendMessage function when Enter key is pressed
-                }
-            }
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+            }); 
         </script>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-            }
-
-            .chat-container {
-                max-width: 600px;
-                margin: auto;
-                padding: 20px;
-                box-sizing: border-box;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-                height: 400px;
-                overflow-y: auto;
-            }
-
-            #input-field {
-                max-width: 600px;
-                margin: auto;
-                padding: 20px;
-                border-radius: 5px;
-            }
-
-            .message {
-                margin-bottom: 10px;
-            }
-
-            .user-message {
-                text-align: right;
-                color: #007bff;
-            }
-
-            .bot-message {
-                text-align: left;
-                color: #28a745;
-            }
-        </style>
         </head>
 
         <body>
@@ -108,8 +108,10 @@
                 <div id="chat-messages"></div>
             </div>
             <div id="input-field">
-                <input type="text" id="user-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
-                <button onclick="sendMessage()">Send</button>
+                <form action="/text-input" method="POST" id="text-form">
+                    <input type="text" id="user-input" name="user" placeholder="Type your message...">
+                    <button type="submit" onclick="sendMessage()">Send</button>
+                </form>
             </div>
         </body>
     </div>
