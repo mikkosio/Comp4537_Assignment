@@ -113,9 +113,10 @@
                 <div id="chat-messages"></div>
             </div>
             <div id="input-field">
-                <form action="/text-input" method="POST" id="text-form">
-                    <input type="text" id="user-input" name="user" placeholder="Type your message...">
-                    <button type="submit" onclick="sendMessage()">Send</button>
+                <form action="/text-input" method="POST" id="text-form" class="d-flex">
+                    <input type="text" id="user-input" name="user" placeholder="Type your message..."
+                        class="form-control">
+                    <button type="submit" class="btn btn-primary ml-2" onclick="sendMessage()">Send</button>
                 </form>
             </div>
         </body>
