@@ -98,13 +98,9 @@
                     messageElement.classList.add('bot-message');
                 }
                 chatMessages.appendChild(messageElement);
+
+                window.stop()
             }
-
-            const form = document.querySelector('form');
-
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-            }); 
         </script>
         </head>
 
