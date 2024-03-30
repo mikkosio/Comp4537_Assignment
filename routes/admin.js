@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const pool = require('../dbConn');
 
 module.exports = (app) => {
     app.get("/admin", (req, res) => {
@@ -23,9 +24,17 @@ module.exports = (app) => {
                 return res.redirect("/dashboard");
             }
 
-            res.render("admin", {
-                username: username,
+            let query = 'SELECT * FROM users';
+            pool.query(query, (error, results) => {
+                if (results.rows.length > 0) {
+                    console.log(results.rows);
+                    res.render("admin", {
+                        username: username,
+                        users: results.rows,
+                    });
+                }
             });
+
         } catch (err) {
             console.error(err);
             return res.redirect("/login");
