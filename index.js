@@ -20,6 +20,9 @@ const chatroom = require('./routes/chatroom');
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
+    if (req.cookies.jwt) {
+        return res.redirect('/dashboard');
+    }
     res.render('index');
 })
 
