@@ -58,6 +58,8 @@
 
                 const userMessage = userInput.value;
                 if (!userMessage.trim()) return;
+                appendMessage(userMessage, 'user');
+                userInput.value = '';
 
                 const route = isFirstMessage ? '/startConversation' : '/continueConversation';
 
@@ -73,11 +75,8 @@
                 const botResponse = data.botResponse;
 
                 // Append user message and bot response to the chat container
-                appendMessage(userMessage, 'user');
                 appendMessage(botResponse, 'bot');
 
-                // Clear the user input
-                userInput.value = '';
 
                 // After the first message, set isFirstMessage to false
                 isFirstMessage = false;
