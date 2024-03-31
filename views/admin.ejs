@@ -1,12 +1,29 @@
 <%- include("templates/header") %>
     <div class="container p-5">
-        <h2> Welcome admin </h2>
-        <p> You are logged in as 
+        <h2>Welcome admin</h2>
+        <p>You are logged in as
             <strong>
                 <%= username %>
             </strong>
         </p>
-        <a href="/logout" class="btn btn-danger"> Logout </a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>API Consumption</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(function(user) { %>
+                    <tr>
+                        <td>
+                            <%= user.username %>
+                        </td>
+                        <td>0</td> <!-- Temp value of 0 -->
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+        <a href="/logout" class="btn btn-danger mt-3">Logout</a>
     </div>
-    
 <%- include("templates/footer") %>

@@ -1,0 +1,122 @@
+<%- include("templates/header") %>
+
+    <div class="container p-5">
+        <h2> Welcome to the Chat Room </h2>
+        <p> Please enter a message below! </p>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+
+            .chat-container {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                box-sizing: border-box;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+                height: 400px;
+                overflow-y: auto;
+            }
+
+            #input-field {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                border-radius: 5px;
+            }
+
+            .message {
+                margin-bottom: 10px;
+            }
+
+            .user-message {
+                text-align: right;
+                color: #007bff;
+            }
+
+            .bot-message {
+                text-align: left;
+                color: #28a745;
+            }
+
+            #user-input {
+                width: 85%;
+                resize: vertical;
+            }
+        </style>
+        <script>
+            // Function to send message to the server and receive bot's response
+            async function sendMessage() {
+                const chatMessages = document.getElementById('chat-messages');
+                const chatContainer = document.getElementById('chat-container');
+                const userInput = document.getElementById('user-input');
+                let isFirstMessage = true;
+
+                const userMessage = userInput.value;
+                if (!userMessage.trim()) return;
+                appendMessage(userMessage, 'user');
+                userInput.value = '';
+
+                const route = isFirstMessage ? '/startConversation' : '/continueConversation';
+
+                console.log(route);
+
+                const response = await fetch(`/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userMessage, route })
+                });
+
+                const data = await response.json();
+                const botResponse = data.botResponse;
+
+                // Append user message and bot response to the chat container
+                appendMessage(botResponse, 'bot');
+
+
+                // After the first message, set isFirstMessage to false
+                isFirstMessage = false;
+
+                // Scroll to the bottom of the chat container
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+
+            // Function to append a message to the chat container
+            function appendMessage(message, sender) {
+                const chatMessages = document.getElementById('chat-messages');
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                messageElement.classList.add('message');
+                if (sender === 'user') {
+                    messageElement.classList.add('user-message');
+                } else if (sender === 'bot') {
+                    messageElement.classList.add('bot-message');
+                }
+                chatMessages.appendChild(messageElement);
+
+                window.stop()
+            }
+        </script>
+        </head>
+
+        <body>
+            <div class="chat-container" id="chat-container">
+                <div id="chat-messages"></div>
+            </div>
+            <div id="input-field">
+                <form action="/text-input" method="POST" id="text-form" class="d-flex">
+                    <input type="text" id="user-input" name="user" placeholder="Type your message..."
+                        class="form-control">
+                    <button type="submit" class="btn btn-primary ml-2" onclick="sendMessage()">Send</button>
+                </form>
+            </div>
+        </body>
+    </div>
+
+    <%- include("templates/footer") %>

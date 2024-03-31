@@ -33,7 +33,6 @@ module.exports = (app) => {
                         if (result) {
                             let query = `SELECT * FROM user_roles WHERE role_id = $1`;
                             pool.query(query, [results.rows[0].role_id], (error, results) => {
-                                console.log(results.rows);
 
                                 const role = results.rows[0].role_name;
                                 let isAdmin = false;
