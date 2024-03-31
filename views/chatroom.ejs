@@ -63,12 +63,14 @@
 
                 const route = isFirstMessage ? '/startConversation' : '/continueConversation';
 
-                const response = await fetch(`https://chatbot-isa-term4-microservice.vercel.app${route}`, {
+                console.log(route);
+
+                const response = await fetch(`/chat`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ userMessage })
+                    body: JSON.stringify({ userMessage, route })
                 });
 
                 const data = await response.json();
