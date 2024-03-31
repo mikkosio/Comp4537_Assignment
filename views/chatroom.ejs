@@ -1,8 +1,8 @@
 <%- include("templates/header") %>
 
     <div class="container p-5">
-        <h2> Welcome to the Chat Room </h2>
-        <p> Please enter a message below! </p>
+        <h2> Welcome to the Chat Room, <%= username %></h2>
+        <p> Enter a message and start chatting with our (dumb) bot! </p>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -49,19 +49,23 @@
             }
         </style>
         <script>
+            // Check if it's the first message
+            sessionStorage.setItem('isFirstMessage', 'true');
+
             // Function to send message to the server and receive bot's response
             async function sendMessage() {
                 const chatMessages = document.getElementById('chat-messages');
                 const chatContainer = document.getElementById('chat-container');
                 const userInput = document.getElementById('user-input');
-                let isFirstMessage = true;
 
                 const userMessage = userInput.value;
                 if (!userMessage.trim()) return;
                 appendMessage(userMessage, 'user');
                 userInput.value = '';
 
-                const route = isFirstMessage ? '/startConversation' : '/continueConversation';
+                console.log(sessionStorage.getItem('isFirstMessage'));
+
+                const route = sessionStorage.getItem('isFirstMessage') === 'true' ? '/startConversation' : '/continueConversation';
 
                 console.log(route);
 
@@ -85,6 +89,10 @@
 
                 // Scroll to the bottom of the chat container
                 chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                if (sessionStorage.getItem('isFirstMessage') === 'true') {
+                    sessionStorage.setItem('isFirstMessage', 'false');
+                }
             }
 
             // Function to append a message to the chat container

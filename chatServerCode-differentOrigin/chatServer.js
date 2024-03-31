@@ -20,6 +20,9 @@ app.post("/startConversation", async (req, res) => {
     // Send user message to the chat system and get the bot's response
     const botResponse = await chat(userMessage);
 
+    // make sure the history is cleared before beginning a different conversation
+    userHistory.length = 0;
+
     // Update user message history
     userHistory.push({ user: userMessage, bot: botResponse });
 
