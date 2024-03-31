@@ -126,7 +126,7 @@ async function query(data) {
 const { default: fetch } = await import("node-fetch");
 	const response = await fetch(
 			"https://api-inference.huggingface.co/models/google/gemma-7b-it", {
-					headers: { Authorization: "Bearer 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", "Content-Type": "application/json" },
+					headers: { Authorization: "Bearer ********", "Content-Type": "application/json" },
 					method: "POST",
 					body: JSON.stringify(data),
 			}
