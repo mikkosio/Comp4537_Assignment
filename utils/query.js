@@ -13,10 +13,8 @@ const client = new Client({
 // Connect to PostgreSQL database
 client.connect()
   .then(() => {
-    const query = `SELECT table_name
-    FROM information_schema.tables
-    WHERE table_schema = 'public'
-    AND table_type = 'BASE TABLE';
+    const query = `INSERT INTO user_api_consumption (user_id, api_route_id, request_count)
+    VALUES (11, 2, 20);    
 		`;
 
   //   const query = `CREATE TABLE user_api_consumption (
