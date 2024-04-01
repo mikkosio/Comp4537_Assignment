@@ -2,9 +2,37 @@ const jwt = require('jsonwebtoken');
 const pool = require('../dbConn');
 
 module.exports = (app) => {
-    app.get("/admin", (req, res) => {
+    async function getTotalAPIrequests() {
+        let query = `
+            SELECT 
+                u.user_id,
+                SUM(uac.request_count) AS total_request_count
+            FROM 
+                users u
+            JOIN 
+                user_api_consumption uac ON u.user_id = uac.user_id
+            GROUP BY 
+                u.user_id;       
+        `;
+
+        try {
+            const { rows } = await pool.query(query);
+            if (rows.length > 0) {
+                return rows;
+            } else {
+                console.log('No results found');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error executing query:', error);
+            throw error;
+        }
+    }
+
+    app.get("/admin", async(req, res) => {
         // Retrieve JWT token from cookie
         const token = req.cookies.jwt;
+        let totalRequestsMade = await getTotalAPIrequests();
 
         // If token is not present, redirect to login
         if (!token) {
@@ -27,10 +55,10 @@ module.exports = (app) => {
             let query = 'SELECT * FROM users';
             pool.query(query, (error, results) => {
                 if (results.rows.length > 0) {
-                    console.log(results.rows);
                     res.render("admin", {
                         username: username,
                         users: results.rows,
+                        totalRequests: totalRequestsMade
                     });
                 }
             });

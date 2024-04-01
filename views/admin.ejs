@@ -19,11 +19,19 @@
                         <td>
                             <%= user.username %>
                         </td>
-                        <td>0</td> <!-- Temp value of 0 -->
+                        <td>
+                            <% var userConsumption = 0; %>
+                                <% totalRequests.forEach(function(request) { %>
+                                    <% if (request.user_id === user.user_id) { %>
+                                        <% userConsumption += parseInt(request.total_request_count); %>
+                                    <% } %>
+                                <% }); %>
+                            <%= userConsumption %>
+                        </td>
                     </tr>
                     <% }); %>
             </tbody>
         </table>
         <a href="/logout" class="btn btn-danger mt-3">Logout</a>
     </div>
-<%- include("templates/footer") %>
+    <%- include("templates/footer") %>
