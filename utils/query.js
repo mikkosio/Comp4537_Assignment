@@ -18,6 +18,14 @@ client.connect()
     WHERE table_schema = 'public'
     AND table_type = 'BASE TABLE';
 		`;
+
+  //   const query = `CREATE TABLE user_api_consumption (
+  //     user_id INT REFERENCES users(user_id),
+  //     api_route_id INT REFERENCES api_route(api_route_id),
+  //     request_count INT DEFAULT 0,
+  //     PRIMARY KEY (user_id, api_route_id)
+  // );  
+	// 	`;
     
     // Execute the query
     return client.query(query);

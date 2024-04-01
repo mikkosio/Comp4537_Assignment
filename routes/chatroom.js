@@ -54,12 +54,35 @@ module.exports = (app) => {
                 body: JSON.stringify({ userMessage })
             });
 
-            console.log('response: ', response);
+            // console.log('response: ', response);
     
             // Extract the bot's response from the chatbot server's response
             const data = await response.json();
-            console.log("response: response");
             const botResponse = data.botResponse;
+
+            // increment api consumption if a succesfull call was made to the api
+            if (botResponse) {
+                let query = `INSERT INTO user_api_consumption (user_id, api_route_id, request_count)
+                SELECT 
+                    (SELECT user_id FROM users WHERE username = $1) AS user_id,
+                    (SELECT api_route_id FROM api_route INNER JOIN endpoint ON api_route.endpoint_id = endpoint.endpoint_id WHERE endpoint.endpoint_path = $2) AS api_route_id,
+                    1 AS request_count
+                ON CONFLICT (user_id, api_route_id) DO UPDATE SET request_count = user_api_consumption.request_count + 1;                
+                `;
+
+                // Execute the query
+                pool.query(query, [username, route], (error, results) => {
+                    if (error) {
+                        console.error('Error executing query:', error);
+                        // Handle error
+                    } else {
+                        console.log('Query executed successfully');
+                        // Handle success
+                    }
+                });
+
+                
+            }
     
             // Send the bot's response back to the client
             res.json({ botResponse });
