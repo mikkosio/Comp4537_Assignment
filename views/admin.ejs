@@ -32,6 +32,35 @@
                     <% }); %>
             </tbody>
         </table>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Endpoint</th>
+                    <th>Requests</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <% endpoints.forEach(function(endpoint) { %>
+                    <td> 
+                        <% endpointMethods.forEach(function(method) {%>
+                            <% if (endpoint.endpoint_id === method.endpoint_id) {%>
+                                <%= method.http_method_name %>
+                            <% } %>
+                        <% }); %>
+                    </td>
+                    <td>
+                        <%= endpoint.endpoint_path %>
+                    </td>
+                    <td>
+                        -
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
         <a href="/logout" class="btn btn-danger mt-3">Logout</a>
     </div>
     <%- include("templates/footer") %>

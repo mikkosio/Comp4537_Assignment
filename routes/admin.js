@@ -29,10 +29,50 @@ module.exports = (app) => {
         }
     }
 
+    async function getEndpoints() {
+        let query = `SELECT * FROM endpoint`;
+
+        try {
+            const { rows } = await pool.query(query);
+            if (rows.length > 0) {
+                return rows;
+            } else {
+                console.log('No results found');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error executing query:', error);
+            throw error;
+        }
+    }
+
+    async function getEndpointMethod() {
+        let query = `SELECT ar.endpoint_id, ar.method_id, hm.http_method_name
+                    FROM api_route ar
+                    JOIN http_method hm ON ar.method_id = hm.http_method_id;`
+
+        try {
+            const { rows } = await pool.query(query);
+            if (rows.length > 0) {
+                return rows;
+            } else {
+                console.log('No results found');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error executing query:', error);
+            throw error;
+        }
+    }
+
     app.get("/admin", async(req, res) => {
         // Retrieve JWT token from cookie
         const token = req.cookies.jwt;
         let totalRequestsMade = await getTotalAPIrequests();
+        let endpoints = await getEndpoints();
+        let endpointMethods = await getEndpointMethod();
+
+        console.log(endpointMethods);
 
         // If token is not present, redirect to login
         if (!token) {
@@ -46,9 +86,9 @@ module.exports = (app) => {
             const username = decodedToken.username;
             const admin = decodedToken.admin;
 
-            // Check if the username is "test"
+            // Check if admin is authorized
             if (!admin) {
-                console.error("Unauthorized access - username is not 'test'");
+                console.error("Unauthorized access - not an admin user");
                 return res.redirect("/dashboard");
             }
 
@@ -58,7 +98,9 @@ module.exports = (app) => {
                     res.render("admin", {
                         username: username,
                         users: results.rows,
-                        totalRequests: totalRequestsMade
+                        totalRequests: totalRequestsMade,
+                        endpoints: endpoints,
+                        endpointMethods: endpointMethods
                     });
                 }
             });
