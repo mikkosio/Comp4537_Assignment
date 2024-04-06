@@ -1,0 +1,58 @@
+<%- include("templates/header") %>
+<div class="container p-5">
+  <form id="profileForm">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        name="username"
+        value="<%= username %>"
+      />
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        value="<%= email %>"
+      />
+    </div>
+    <br>
+    <button type="button" onclick="submitProfileForm()" class="btn btn-primary">
+      Save Changes
+    </button>
+  </form>
+  <p id="msg" class="text-danger fw-medium"></p>
+  <script>
+    function submitProfileForm() {
+      const formData = {
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+      };
+
+      fetch("/profile", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById('msg').textContent = data.message;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          document.getElementById('msg').textContent = data.message;
+        });
+    }
+  </script>
+
+  <a href="/logout" class="btn btn-danger">Logout</a>
+</div>
+<%- include("templates/footer") %>
