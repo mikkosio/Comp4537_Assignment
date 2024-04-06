@@ -81,6 +81,7 @@ module.exports = (app) => {
           if (result.rows[0].role_id === 2) {
             isAdmin = true;
           }
+          //Making sure the new username and email are not used by another user
           let query =
             "SELECT * FROM users WHERE (username = $1 OR email = $2) AND user_id != $3";
           result = await client.query(query, [
@@ -91,25 +92,33 @@ module.exports = (app) => {
           if (result.rows.length > 0) {
             return res.json({ message: "Username or email already exists" });
           } else {
-            let query =
-              "UPDATE users SET username = $1, email = $2 WHERE user_id = $3";
-            await client.query(query, [form_username, form_email, user_id]);
+            try {
+              let query =
+                "UPDATE users SET username = $1, email = $2 WHERE user_id = $3";
+              await client.query(query, [form_username, form_email, user_id]);
 
-            //Delete the cookie and create a new one with updated username
-            res.clearCookie("jwt");
+              //Delete the cookie and create a new one with updated username
+              res.clearCookie("jwt");
 
-            const token = jwt.sign(
-              { username: form_username, admin: isAdmin },
-              process.env.SECRET_KEY,
-              { expiresIn: "1h" }
-            );
-            res.cookie("jwt", token, {
-              httpOnly: true,
-              secure: true,
-              maxAge: 60 * 60 * 1000,
-            });
-            console.log("Replaced cookie with updated username.");
-            res.json({ message:"User profile updated successfully!"});
+              const token = jwt.sign(
+                { username: form_username, admin: isAdmin },
+                process.env.SECRET_KEY,
+                { expiresIn: "1h" }
+              );
+              res.cookie("jwt", token, {
+                httpOnly: true,
+                secure: true,
+                maxAge: 60 * 60 * 1000,
+              });
+              console.log("Replaced cookie with updated username.");
+              res.json({
+                message: "User profile updated successfully!",
+                success: true,
+              });
+            } catch (err) {
+              console.error(err);
+              return res.json({ message: "Failed to update user profile" });
+            }
           }
         } else if (result.rows.length > 1) {
           return res.json({

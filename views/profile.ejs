@@ -27,7 +27,7 @@
       Save Changes
     </button>
   </form>
-  <p id="msg" class="text-danger fw-medium"></p>
+  <p id="msg" class="text-start"></p>
   <script>
     function submitProfileForm() {
       const formData = {
@@ -44,10 +44,16 @@
       })
         .then((response) => response.json())
         .then((data) => {
+          if (data.success) {
+            document.getElementById('msg').className = 'text-success fw-medium';
+          } else {
+            document.getElementById('msg').className = 'text-danger fw-medium';
+          }
           document.getElementById('msg').textContent = data.message;
         })
         .catch((error) => {
           console.error("Error:", error);
+          document.getElementById('msg').className = 'text-danger fw-medium';
           document.getElementById('msg').textContent = data.message;
         });
     }
