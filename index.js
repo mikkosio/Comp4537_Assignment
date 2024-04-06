@@ -1,3 +1,5 @@
+//ChatGPT 3.5 and 4.0 was used for part of the code generation in this project.
+
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
