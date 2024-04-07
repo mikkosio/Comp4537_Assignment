@@ -112,7 +112,24 @@ module.exports = (app) => {
                     }
                 });
 
-                
+                let endpointQuery = `INSERT INTO endpoint (endpoint_id, endpoint_path, request_count)
+                                    SELECT 
+                                    (SELECT endpoint_id FROM endpoint WHERE endpoint_path = $1) AS endpoint_id,
+                                    $1 AS endpoint_path,
+                                    1 AS request_count
+                                    ON CONFLICT (endpoint_id) DO UPDATE SET request_count = endpoint.request_count + 1;`;
+
+                // Execute the query
+                pool.query(endpointQuery, [route], (error, results) => {
+                    if (error) {
+                        console.error('Error executing query:', error);
+                        // Handle error
+                    } else {
+                        console.log('Query executed successfully');
+                        // Handle success
+                    }
+                });
+
             }
     
             // Send the bot's response back to the client
