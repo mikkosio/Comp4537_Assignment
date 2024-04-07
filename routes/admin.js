@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const pool = require('../dbConn');
+const lang = require('../lang/en');
 
 module.exports = (app) => {
     async function getTotalAPIrequests() {
@@ -98,7 +99,8 @@ module.exports = (app) => {
                         users: results.rows,
                         totalRequests: totalRequestsMade,
                         endpoints: endpoints,
-                        endpointMethods: endpointMethods
+                        endpointMethods: endpointMethods,
+                        lang: lang
                     });
                 }
             });
