@@ -1,8 +1,8 @@
 <%- include("templates/header") %>
 
     <div class="container p-5">
-        <h2> Welcome to the Chat Room, <%= username %></h2>
-        <p> Enter a message and start chatting with our (dumb) bot! </p>
+        <h2> <%= lang.welcomeChatroom %> <%= username %></h2>
+        <p> <%= lang.enterMsg %> </p>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -119,9 +119,9 @@
             </div>
             <div id="input-field">
                 <form action="/text-input" method="POST" id="text-form" class="d-flex">
-                    <input type="text" id="user-input" name="user" placeholder="Type your message..."
+                    <input type="text" id="user-input" name="user" placeholder= "<%= lang.placeholder %>"
                         class="form-control">
-                    <button type="submit" class="btn btn-primary ml-2" onclick="sendMessage()">Send</button>
+                    <button type="submit" class="btn btn-primary ml-2" onclick="sendMessage()"><%= lang.send %></button>
                 </form>
             </div>
         </body>

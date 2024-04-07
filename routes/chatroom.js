@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const pool = require('../dbConn');
+const lang = require('../lang/en');
 
 module.exports = (app) => {
 
@@ -50,6 +51,7 @@ module.exports = (app) => {
             const username = decodedToken.username;
             res.render("chatroom", {
                 username: username,
+                lang: lang,
             });
         } catch (err) {
             console.error(err);
