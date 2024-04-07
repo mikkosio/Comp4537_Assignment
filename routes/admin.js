@@ -65,14 +65,12 @@ module.exports = (app) => {
         }
     }
 
-    app.get("/admin", async(req, res) => {
+    app.get("/admin", async (req, res) => {
         // Retrieve JWT token from cookie
         const token = req.cookies.jwt;
         let totalRequestsMade = await getTotalAPIrequests();
         let endpoints = await getEndpoints();
         let endpointMethods = await getEndpointMethod();
-
-        console.log(endpointMethods);
 
         // If token is not present, redirect to login
         if (!token) {

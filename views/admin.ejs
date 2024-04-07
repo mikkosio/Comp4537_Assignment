@@ -55,7 +55,11 @@
                         <%= endpoint.endpoint_path %>
                     </td>
                     <td>
-                        -
+                        <% endpointMethods.forEach(function(request) {%>
+                            <% if (endpoint.endpoint_id == request.endpoint_id) {%>
+                                <%= endpoint.request_count %>
+                            <% } %>
+                        <% }); %>
                     </td>
                 </tr>
                 <% }); %>
