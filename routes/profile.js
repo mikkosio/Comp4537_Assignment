@@ -120,6 +120,24 @@ module.exports = (app) => {
               console.error(err);
               return res.json({ message: lang.failed_update_profile });
             }
+
+            let query = `INSERT INTO endpoint (endpoint_id, endpoint_path, request_count)
+                                    SELECT 
+                                    (SELECT endpoint_id FROM endpoint WHERE endpoint_path = $1) AS endpoint_id,
+                                    $1 AS endpoint_path,
+                                    1 AS request_count
+                                    ON CONFLICT (endpoint_id) DO UPDATE SET request_count = endpoint.request_count + 1;`;
+
+            // Execute the query
+            pool.query(query, ["/profile"], (error, results) => {
+              if (error) {
+                console.error("Error executing query:", error);
+                // Handle error
+              } else {
+                console.log("Query executed successfully");
+                // Handle success
+              }
+            });
           }
         } else if (result.rows.length > 1) {
           return res.json({
