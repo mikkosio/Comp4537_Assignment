@@ -3,20 +3,23 @@
 <div class="container p-5">
   <h2><%= lang.welcome_chatroom %> <%= username %></h2>
   <p><%= lang.enter_msg %></p>
-  <button
-    type="button"
-    class="btn btn-secondary ml-2 download-btn"
-    onclick="downloadUserHistory()"
-  >
-    Download User History
-  </button>
-  <button
-    type="button"
-    class="btn btn-secondary ml-2 download-btn"
-    onclick="deleteUserHistory()"
-  >
-    Delete User History
-  </button>
+  <div>
+    <button
+      type="button"
+      class="btn btn-secondary ml-2 download-btn"
+      onclick="downloadUserHistory()"
+    >
+      <%= lang.download_user_history %>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary ml-2 download-btn"
+      onclick="deleteUserHistory()"
+    >
+      <%= lang.delete_user_history %>
+    </button>
+  </div>
+  <br>
   <style>
     body {
       font-family: Arial, sans-serif;

@@ -20,5 +20,7 @@ module.exports = {
     no_user_found: "No user found with this username",
     general_error_msg_profile: "An error occurred while updating the profile",
     delete_user: "Delete User",
+    delete_user_history: "Delete User History",
+    download_user_history: "Download User History",
 
 }

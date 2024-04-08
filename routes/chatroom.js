@@ -190,6 +190,24 @@ app.get("/deleteUserHistory", async (req, res) => {
             throw new Error("Failed to delete user history on the actual chat server");
         }
 
+        let query = `INSERT INTO endpoint (endpoint_id, endpoint_path, request_count)
+                                    SELECT 
+                                    (SELECT endpoint_id FROM endpoint WHERE endpoint_path = $1) AS endpoint_id,
+                                    $1 AS endpoint_path,
+                                    1 AS request_count
+                                    ON CONFLICT (endpoint_id) DO UPDATE SET request_count = endpoint.request_count + 1;`;
+
+        // Execute the query
+        pool.query(query, ["/deleteUserHistory"], (error, results) => {
+            if (error) {
+                console.error("Error executing query:", error);
+                // Handle error
+            } else {
+                console.log("Query executed successfully");
+                // Handle success
+            }
+        });
+
         // Send success response to the client
         res.json({ message: "User history deleted successfully on the actual chat server" });
     } catch (error) {
@@ -209,6 +227,24 @@ app.get("/deleteUserHistory", async (req, res) => {
       if (!response.ok) {
         throw new Error("Failed to fetch data from external microservice API");
       }
+
+        let query = `INSERT INTO endpoint (endpoint_id, endpoint_path, request_count)
+                                    SELECT 
+                                    (SELECT endpoint_id FROM endpoint WHERE endpoint_path = $1) AS endpoint_id,
+                                    $1 AS endpoint_path,
+                                    1 AS request_count
+                                    ON CONFLICT (endpoint_id) DO UPDATE SET request_count = endpoint.request_count + 1;`;
+
+        // Execute the query
+        pool.query(query, ["/downloadUserHistory"], (error, results) => {
+            if (error) {
+                console.error("Error executing query:", error);
+                // Handle error
+            } else {
+                console.log("Query executed successfully");
+                // Handle success
+            }
+        });
 
       // Get the text data from the response
       const textData = await response.text();
