@@ -13,9 +13,14 @@ const client = new Client({
 // Connect to PostgreSQL database
 client.connect()
   .then(() => {
-    const query = `INSERT INTO user_api_consumption (user_id, api_route_id, request_count)
-    VALUES (11, 2, 20);    
-		`;
+    const query = `
+    ALTER TABLE user_api_consumption
+    ADD CONSTRAINT user_api_consumption_user_id_fkey
+    FOREIGN KEY (user_id) 
+    REFERENCES users(user_id) 
+    ON DELETE CASCADE;
+    `;
+    
 
   //   const query = `CREATE TABLE user_api_consumption (
   //     user_id INT REFERENCES users(user_id),

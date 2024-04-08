@@ -20,6 +20,7 @@ const logout = require('./routes/logout');
 const admin = require('./routes/admin');
 const chatroom = require('./routes/chatroom');
 const profile = require('./routes/profile');
+const deleteUser = require('./routes/deleteUser')
 
 app.set('view engine', 'ejs');
 
@@ -57,6 +58,7 @@ logout(app);
 admin(app);
 chatroom(app);
 profile(app);
+deleteUser(app);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

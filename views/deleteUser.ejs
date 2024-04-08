@@ -1,0 +1,18 @@
+
+    <h1>Delete User</h1>
+    <% if (msg != null) { %>
+        <p><%= msg %></p>
+    <% } %>
+    <form action="/deleteUser" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <button type="submit">Delete User</button>
+        </div>
+    </form>
