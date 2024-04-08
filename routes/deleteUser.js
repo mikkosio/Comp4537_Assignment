@@ -8,11 +8,22 @@ const saltRounds = 10;
 
 module.exports = (app) => {
 	app.get('/deleteUser', (req, res) => {
+		const token = req.cookies.jwt;
+
+		if (!token) {
+			console.error("No token found for this user");
+			return res.redirect("/login");
+		}
+		try {
 			res.render('deleteUser', {
-				 msg: null,
-				 lang: lang 
-				}); // Pass null for msg
-	});
+				msg: null,
+				lang: lang
+			}); // Pass null for msg
+		} catch (err) {
+			console.error(err);
+			return res.redirect("/login");
+		}
+	})
 
 	app.post('/deleteUser', (req, res) => {
 			var username = req.body.username;
