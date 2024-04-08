@@ -1,6 +1,7 @@
 const pool = require("../dbConn");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
+const lang = require('../lang/en');
 
 module.exports = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -67,7 +68,7 @@ module.exports = (app) => {
       const form_email = req.body.email;
 
       if (!form_email || !form_username) {
-        return res.json({ message: "username and email are required" });
+        return res.json({ message: lang.username_email_required });
       }
 
       // check if user already exists
@@ -90,7 +91,7 @@ module.exports = (app) => {
             user_id,
           ]);
           if (result.rows.length > 0) {
-            return res.json({ message: "Username or email already exists" });
+            return res.json({ message: lang.username_email_in_use });
           } else {
             try {
               let query =
@@ -112,24 +113,24 @@ module.exports = (app) => {
               });
               console.log("Replaced cookie with updated username.");
               res.json({
-                message: "User profile updated successfully!",
+                message: lang.profile_updated,
                 success: true,
               });
             } catch (err) {
               console.error(err);
-              return res.json({ message: "Failed to update user profile" });
+              return res.json({ message: lang.failed_update_profile });
             }
           }
         } else if (result.rows.length > 1) {
           return res.json({
-            message: "Multiple users found with this username",
+            message: lang.duplicated_username,
           });
         } else {
-          return res.json({ message: "No user found with this username" });
+          return res.json({ message: lang.no_user_found });
         }
       } catch (err) {
         console.error(err);
-        res.json({ message: "An error occurred when updating user profile" });
+        res.json({ message: lang.general_error_msg_profile });
       } finally {
         client.release();
       }
