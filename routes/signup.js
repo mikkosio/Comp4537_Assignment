@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const pool = require('../dbConn');
 const bcrypt = require("bcrypt");
+const lang = require("../lang/en");
 const saltRounds = 10;
 
 module.exports = (app) => {
@@ -28,7 +29,7 @@ module.exports = (app) => {
             let query = 'SELECT * FROM users WHERE username = $1';
             const result = await client.query(query, [username]);
             if (result.rows.length > 0) {
-                return res.redirect('/signup?msg=User already exists');
+                return res.redirect(`/signup?msg=${lang.duplicated_username}`);
             } else {
                 // hash password
                 bcrypt.hash(password, saltRounds, async (err, hash) => {

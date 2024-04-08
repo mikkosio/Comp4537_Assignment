@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const lang = require("./lang/en");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -47,7 +48,9 @@ app.get('/', (req, res) => {
     if (req.cookies.jwt) {
         return res.redirect('/dashboard');
     }
-    res.render('index');
+    res.render('index', {
+        lang: lang
+    });
 })
 
 // routes

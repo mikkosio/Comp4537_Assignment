@@ -1,15 +1,18 @@
 <%- include("templates/header") %>
   
 <div class="container p-5">
-    <h2>Welcome to the Dashboard</h2>
-    <p>You are logged in as 
-        <strong><%= username %></strong>
+    <h2><%= lang.welcome_dashboard %></h2>
+    <p>
+        <%= lang.logged_in_as %>
+            <strong>
+                <%= username %>
+            </strong>
     </p>
     <table class="table">
         <thead>
             <tr>
-                <th>API Requests Used</th>
-                <th>API Requests Remaining</th>
+                <th> <%= lang.requests_used %> </th>
+                <th> <%= lang.requests_remaining %> </th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +20,7 @@
                 <td><%= totalRequests %></td>
                 <td class="<%= 20 - totalRequests <= 0 ? 'text-danger' : '' %>">
                     <% if (20 - totalRequests <= 0) { %>
-                        API consumption overrage
+                        <%= lang.request_overage %>
                     <% } else { %>
                         <%= 20 - totalRequests %>
                     <% } %>
@@ -26,9 +29,9 @@
         </tbody>
     </table>
     <% if (20 - totalRequests <= 0) { %>
-        <p class="text-danger">Your API requests remaining are less than or equal to 0.</p>
+        <p class="text-danger"> <%= lang.no_requests %> </p>
     <% } %>
-    <a href="/logout" class="btn btn-danger">Logout</a>
+    <a href="/logout" class="btn btn-danger"> <%= lang.logout %> </a>
 </div>
 
 <%- include("templates/footer") %>

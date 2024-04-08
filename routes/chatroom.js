@@ -137,7 +137,7 @@ module.exports = (app) => {
       console.error("Error:", error);
       res
         .status(500)
-        .json({ error: "Here, error occurred while processing the request." });
+        .json({ error: lang.request_error });
     }
   });
 
@@ -173,7 +173,7 @@ module.exports = (app) => {
     } catch (error) {
       // Handle any errors
       console.error("Error:", error.message);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).json({ error: lang.internal_error });
     }
   });
 
@@ -209,11 +209,11 @@ app.get("/deleteUserHistory", async (req, res) => {
         });
 
         // Send success response to the client
-        res.json({ message: "User history deleted successfully on the actual chat server" });
+        res.json({ message: lang.history_deleted });
     } catch (error) {
         // Handle any errors
         console.error("Error:", error.message);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: lang.internal_error });
     }
 });
 
@@ -261,7 +261,7 @@ app.get("/deleteUserHistory", async (req, res) => {
     } catch (error) {
       // Handle any errors
       console.error("Error:", error.message);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).json({ error: lang.internal_error });
     }
   });
 };

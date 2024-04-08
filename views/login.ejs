@@ -2,18 +2,18 @@
 
     <div class="container p-5">
         <form action='/login' method='POST' class="col-5 mx-auto">
-            <h2> Log in </h2>
+            <h2> <%= lang.login %> </h2>
             <div class="mb-3">
-                <label for="inputEmail" class="form-label"> Email </label>
+                <label for="inputEmail" class="form-label"> <%= lang.email %> </label>
                 <input type="text" class="form-control" name="email" id="inputEmail" required>
             </div>
             <div class="mb-3">
-                <label for="inputPassword" class="form-label"> Password </label>
+                <label for="inputPassword" class="form-label"> <%= lang.password %> </label>
                 <input type="password" class="form-control" name="password" id="inputPassword" required>
             </div>
-            <button type="submit" value="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" value="submit" class="btn btn-primary"> <%= lang.submit %> </button>
             <p class="d-inline-block float-end">
-                Don't have an account? <a href="/signup"> Sign Up here. </a>
+                <%= lang.no_account %> <a href="/signup"> <%= lang.signup_here %> </a>
             </p>
             <p class="text-danger fw-medium">
                 <%= msg %>

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const pool = require("../dbConn");
+const lang = require("../lang/en")
 
 module.exports = (app) => {
   async function getTotalAPIrequests(username) {
@@ -55,6 +56,7 @@ module.exports = (app) => {
       res.render("dashboard", {
         username: username,
         totalRequests: totalRequestsMade,
+        lang: lang,
       });
     } catch (err) {
       console.error(err);

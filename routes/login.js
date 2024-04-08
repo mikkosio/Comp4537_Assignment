@@ -2,13 +2,15 @@ const bodyParser = require('body-parser');
 const pool = require('../dbConn');
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
+const lang = require("../lang/en");
 const saltRounds = 10;
 
 module.exports = (app) => {
     app.get('/login', (req, res) => {
         var msg = '';
         res.render('login', {
-            'msg': msg
+            'msg': msg,
+            lang: lang
         });
     });
 
@@ -54,23 +56,23 @@ module.exports = (app) => {
                                 }
                             });
                         } else {
-                            var msg = 'Incorrect password';
                             res.render('login', {
-                                'msg': msg
+                                'msg': lang.incorrect_password,
+                                lang: lang
                             });
                         }
                     });
                 } else {
-                    var msg = 'User does not exist';
                     res.render('login', {
-                        'msg': msg
+                        'msg': lang.no_user_found,
+                        lang: lang
                     });
                 }
             });
         } else {
-            var msg = 'Please enter both email and password';
             res.render('login', {
-                'msg': msg
+                'msg': lang.email_password_required,
+                lang: lang
             });
         }
     });

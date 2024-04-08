@@ -54,24 +54,21 @@ module.exports = (app) => {
 															res.redirect('/login');
 													});
 											} else {
-													var msg = 'Incorrect username or password';
 													res.render('deleteUser', {
-															'msg': msg
+															'msg': lang.incorrect_username_password
 													});
 											}
 									});
 							} else {
-									var msg = 'User does not exist';
 									res.render('deleteUser', {
-											'msg': msg,
+											'msg': lang.no_user_found,
 											lang: lang
 									});
 							}
 					});
 			} else {
-					var msg = 'Please enter both username and password';
 					res.render('deleteUser', {
-							'msg': msg,
+							'msg': lang.username_password_required,
 							lang: lang
 					});
 			}
