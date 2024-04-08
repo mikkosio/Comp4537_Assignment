@@ -2,12 +2,16 @@ const bodyParser = require('body-parser');
 const pool = require('../dbConn');
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
+const lang = require("../lang/en")
 const saltRounds = 10;
 
 
 module.exports = (app) => {
 	app.get('/deleteUser', (req, res) => {
-			res.render('deleteUser', { msg: null }); // Pass null for msg
+			res.render('deleteUser', {
+				 msg: null,
+				 lang: lang 
+				}); // Pass null for msg
 	});
 
 	app.post('/deleteUser', (req, res) => {
@@ -48,14 +52,16 @@ module.exports = (app) => {
 							} else {
 									var msg = 'User does not exist';
 									res.render('deleteUser', {
-											'msg': msg
+											'msg': msg,
+											lang: lang
 									});
 							}
 					});
 			} else {
 					var msg = 'Please enter both username and password';
 					res.render('deleteUser', {
-							'msg': msg
+							'msg': msg,
+							lang: lang
 					});
 			}
 	});
