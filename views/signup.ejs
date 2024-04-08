@@ -1,25 +1,25 @@
 <%- include("templates/header") %>
 
     <div class="container p-5">
-        <form action='/signup' method='POST' class="col-5 mx-auto">
-            <h2> Create an Account </h2>
+        <form action='/signup' method='POST' class="col-5 mx-auto" onsubmit="return validateForm()">
+            <h2>Create an Account</h2>
             <div class="mb-3">
-                <label for="inputUsername" class="form-label"> Username </label>
+                <label for="inputUsername" class="form-label">Username</label>
                 <input type="text" class="form-control" name="username" id="inputUsername" required>
             </div>
             <div class="mb-3">
-                <label for="inputEmail" class="form-label"> Email </label>
-                <input type="text" class="form-control" name="email" id="inputEmail" required>
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="inputEmail" required>
             </div>
             <div class="mb-3">
-                <label for="inputPassword" class="form-label"> Password </label>
+                <label for="inputPassword" class="form-label">Password</label>
                 <input type="password" class="form-control" name="password" id="inputPassword" required>
             </div>
             <button type="submit" value="submit" class="btn btn-primary">Submit</button>
             <p class="d-inline-block float-end">
-                Already have an account? <a href="/login"> Sign In here. </a>
+                Already have an account? <a href="/login">Sign In here.</a>
             </p>
-            <p class="text-danger fw-medium">
+            <p class="text-danger fw-medium" id="errorMsg">
                 <%= msg %>
             </p>
         </form>
@@ -30,6 +30,37 @@
 
 <!-- Generated with help of gpt 3.5 -->
 <script>
+    function validateForm() {
+        const emailInput = document.getElementById('inputEmail');
+        const errorMsg = document.getElementById('errorMsg');
+
+        // Basic email format check using HTML5
+        if (!emailInput.validity.valid) {
+            errorMsg.textContent = 'Please enter a valid email address.';
+            return false;
+        }
+
+        // Custom checks for valid domain
+        const email = emailInput.value.trim().toLowerCase();
+        const atIndex = email.indexOf('@');
+
+        if (atIndex === -1) {
+            errorMsg.textContent = 'Email must contain "@" symbol.';
+            return false;
+        }
+
+        const domain = email.slice(atIndex + 1);
+        const domainParts = domain.split('.');
+        if (domainParts.length < 2) {
+            errorMsg.textContent = 'Invalid email domain.';
+            return false;
+        }
+
+        // Clear error message if validation passes
+        errorMsg.textContent = '';
+        return true;
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const inputFields = document.querySelectorAll('input');
         inputFields.forEach(function (input) {
