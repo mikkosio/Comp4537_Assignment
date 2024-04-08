@@ -1,21 +1,28 @@
 <%- include("templates/header") %>
-<div class="container p-5">
-  <h1>Delete User</h1>
-  <% if (msg != null) { %>
-      <p><%= msg %></p>
-  <% } %>
-  <form action="/deleteUser" method="post" class="col-5 mx-auto"">
-      <div class="mb-3">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required>
-      </div>
-      <div class="mb-3">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required>
-      </div>
-      <div>
-          <button type="submit" class="btn btn-danger">Delete User</button>
-      </div>
-  </form>
-</div>
+
+    <div class="container p-5">
+        <h1>Delete User</h1>
+
+        <% if (msg !=null) { %>
+            <p>
+                <%= msg %>
+            </p>
+        <% } %>
+            <form action="/deleteUser" method="post" class="col-5 mx-auto">
+                <div class="mb-3">
+                    <label for="username" class="form-label"><%= lang.username %>:</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label"><%= lang.password %>:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-danger"><%= lang.delete_user %></button>
+                </div>
+            </form>
+    </div>
+
 <%- include("templates/footer") %>

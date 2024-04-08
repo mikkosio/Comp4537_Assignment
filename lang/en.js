@@ -1,5 +1,6 @@
 module.exports = {
     username: "Username",
+    password: "Password",
     welcome: "Welcome",
     logged_in_as: "You are logged in as",
     api_consumption: "API Consumption",
@@ -18,5 +19,6 @@ module.exports = {
     duplicated_username: "Multiple users found with this username",
     no_user_found: "No user found with this username",
     general_error_msg_profile: "An error occurred while updating the profile",
+    delete_user: "Delete User",
 
 }
