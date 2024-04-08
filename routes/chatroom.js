@@ -112,6 +112,7 @@ module.exports = (app) => {
           }
         });
 
+        // query was made with the help of gpt 3.5
         let endpointQuery = `INSERT INTO endpoint (endpoint_id, endpoint_path, request_count)
                                     SELECT 
                                     (SELECT endpoint_id FROM endpoint WHERE endpoint_path = $1) AS endpoint_id,
@@ -154,6 +155,7 @@ module.exports = (app) => {
     });
   });
 
+  // made with the help of gpt 3.5
   // Route to proxy GET request to external microservice API
   app.get("/getUserHistory", async (req, res) => {
     try {
@@ -177,6 +179,7 @@ module.exports = (app) => {
     }
   });
 
+  // made with the help of gpt 3.5
   // Route to proxy GET request to actual chat server to delete user history
 app.get("/deleteUserHistory", async (req, res) => {
     try {
@@ -217,6 +220,7 @@ app.get("/deleteUserHistory", async (req, res) => {
     }
 });
 
+  // made with the help of gpt 3.5
   // Route to proxy GET request to external microservice API
   app.get("/downloadUserHistory", async (req, res) => {
     try {

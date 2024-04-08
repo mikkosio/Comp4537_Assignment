@@ -4,6 +4,7 @@ const lang = require('../lang/en');
 
 module.exports = (app) => {
     async function getTotalAPIrequests() {
+        // query was made with the help of gpt 3.5
         let query = `
             SELECT 
                 u.user_id,
@@ -48,6 +49,7 @@ module.exports = (app) => {
     }
 
     async function getEndpointMethod() {
+        // query was made with the help of gpt 3.5
         let query = `SELECT ar.endpoint_id, ar.method_id, hm.http_method_name
                     FROM api_route ar
                     JOIN http_method hm ON ar.method_id = hm.http_method_id;`

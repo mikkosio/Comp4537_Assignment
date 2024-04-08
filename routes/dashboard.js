@@ -4,6 +4,7 @@ const lang = require("../lang/en")
 
 module.exports = (app) => {
   async function getTotalAPIrequests(username) {
+    // query was made with the help of gpt 3.5
     let query = `SELECT 
             u.user_id,
             SUM(uac.request_count) AS total_request_count
